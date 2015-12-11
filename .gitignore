@@ -4,3 +4,7 @@
 *.ipr
 *.iws
 .idea/
+
+
+# Bower
+bower_components

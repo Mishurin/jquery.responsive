@@ -1,0 +1,23 @@
+{
+  "name": "jquery.responsive",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Mishurin/jquery.responsive",
+  "authors": [
+    "Igor Mishurin <Igor_Mishurin@epam.com>"
+  ],
+  "description": "JQuery Helpers for Responsive Design",
+  "main": "jquery.responsive.js",
+  "keywords": [
+    "mediaqueries",
+    "responsive",
+    "jQuery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

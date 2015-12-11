@@ -1,0 +1,7 @@
+(function($) {
+
+	$.responsive = function() {
+
+	};
+
+}(jQuery));
