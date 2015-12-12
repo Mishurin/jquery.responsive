@@ -8,3 +8,6 @@
 
 # Bower
 bower_components
+
+# NodeJS
+node_modules
