@@ -11,3 +11,6 @@ bower_components
 
 # NodeJS
 node_modules
+
+# Test Coverage
+coverage

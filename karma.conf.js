@@ -28,19 +28,26 @@ module.exports = function(config) {
         plugins: [
             'karma-jasmine',
             'karma-chrome-launcher',
-            'karma-jasmine-matchers'
+            'karma-jasmine-matchers',
+            'karma-coverage'
         ],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
+            'jquery.responsive.js': ['coverage']
+        },
+
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/'
         },
 
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
 
 
         // web server port
