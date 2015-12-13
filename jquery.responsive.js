@@ -1,9 +1,25 @@
 (function($) {
+
+    var $window = $(window);
+
     var DEFAULT_SETTINGS = {
         breakpoints: [
-            {'mobile': 768},
-            {'tablet': 992},
-            {'desktop': 1200}
+            {
+                name: 'mobile',
+                value: 0
+            },
+            {
+                name: 'tablet',
+                value: 768
+            },
+            {
+                name: 'desktop',
+                value: 992
+            },
+            {
+                name: 'largeDesktop',
+                value: 1200
+            }
         ],
         resize: true
     };
@@ -20,31 +36,66 @@
     function _preparePrototypeFromArray(proto, breakpoints) {
         var i = breakpoints.length;
         while(i--) {
-            proto['is' + _capitalizeFirstLetter(Object.keys(breakpoints[i])[0])] = function() {};
+            proto['is' + _capitalizeFirstLetter((breakpoints[i].name))] = function() {
+
+            };
         }
+        proto.isMobile = function() {};
     }
 
     function _preparePrototypeFromObject(proto, breakpoints) {
         for(var breakpoint in breakpoints) {
-            proto['is' + _capitalizeFirstLetter(breakpoint)] = function() {};
+            if(breakpoints.hasOwnProperty(breakpoint)) {
+                proto['is' + _capitalizeFirstLetter(breakpoints[breakpoint])] = function() {};
+            }
         }
     }
 
-    var Responsive = function () {};
+    var Responsive = function (settings) {
+        this.settings = settings;
+    };
 
-	$.responsive = function(settings) {
+    $.responsive = function(settings) {
         var proto = Responsive.prototype = {};
         var settings = $.extend({}, DEFAULT_SETTINGS, settings);
         var breakpoints = settings.breakpoints;
         if($.isArray(breakpoints)) {
+            breakpoints = _sortBreakPoints(breakpoints);
+            proto.getBreakpoint = _getBreakPointFromWindowSize;
             _preparePrototypeFromArray(proto, breakpoints);
         } else if(_isObject(breakpoints)) {
+            proto.getBreakpoint = _getBreakPointFromMediaQueries;
             _preparePrototypeFromObject(proto, breakpoints);
         } else {
             breakpoints = DEFAULT_SETTINGS.breakpoints;
+            proto.getBreakpoint = _getBreakPointFromWindowSize;
             _preparePrototypeFromArray(proto, breakpoints);
         }
 
         return new Responsive(settings);
-	};
+    };
+
+    var _sortBreakPoints = function (breakpoints) {
+        return breakpoints.sort(function (a, b) {
+            return a.value - b.value;
+        })
+    };
+
+    var _getBreakPointFromWindowSize = function () {
+        var breakpoints = this.settings.breakpoints;
+        var windowWidth = $window.width();
+        var currentBreakPoint = null;
+        var i = breakpoints.length;
+        while(i--) {
+            currentBreakPoint = breakpoints[i].name;
+            if(windowWidth >= breakpoints[i].value) {
+                return currentBreakPoint
+            }
+        }
+    };
+
+    var _getBreakPointFromMediaQueries = function () {
+
+    }
+
 }(jQuery));

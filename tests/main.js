@@ -33,10 +33,34 @@ describe("JQuery Responsive Helpers Test Suit", function() {
     });
 
     it("Should return custom method isA when breakpoints are set", function() {
-        expect($.responsive({breakpoints: [{'a': 100}]}).isA).toBeFunction();
+        expect($.responsive({breakpoints: [{name: 'a', key: '100'}]}).isA).toBeFunction();
     });
 
     it("Should return custom method isA when breakpoints set as a dictionary", function() {
-        expect($.responsive({breakpoints: {'a': 'a'}}).isA).toBeFunction();
+        expect($.responsive({breakpoints: {a: 'a'}}).isA).toBeFunction();
+    });
+
+    it("Should return custom method isA when breakpoints set as a dictionary", function() {
+        expect($.responsive({}).getBreakpoint).toBeFunction();
+    });
+
+    it("Should return mobile breakpoint", function() {
+        spyOn($.fn, 'width').and.returnValue(100);
+        expect($.responsive({}).getBreakpoint()).toBe('mobile');
+    });
+
+    it("Should return tablet breakpoint", function() {
+        spyOn($.fn, 'width').and.returnValue(768);
+        expect($.responsive({}).getBreakpoint()).toBe('tablet');
+    });
+
+    it("Should return desktop breakpoint", function() {
+        spyOn($.fn, 'width').and.returnValue(992);
+        expect($.responsive({}).getBreakpoint()).toBe('desktop');
+    });
+
+    it("Should return desktop breakpoint", function() {
+        spyOn($.fn, 'width').and.returnValue(1200);
+        expect($.responsive({}).getBreakpoint()).toBe('largeDesktop');
     });
 });
