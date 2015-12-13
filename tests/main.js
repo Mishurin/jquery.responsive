@@ -63,4 +63,24 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         spyOn($.fn, 'width').and.returnValue(1200);
         expect($.responsive({}).getBreakpoint()).toBe('largeDesktop');
     });
+
+    it("Should return true for mobile area", function() {
+        spyOn($.fn, 'width').and.returnValue(100);
+        expect($.responsive({}).isMobile()).toBe(true);
+    });
+
+    it("Should return true for tablet area", function() {
+        spyOn($.fn, 'width').and.returnValue(768);
+        expect($.responsive({}).isTablet()).toBe(true);
+    });
+
+    it("Should return true for desktop area", function() {
+        spyOn($.fn, 'width').and.returnValue(992);
+        expect($.responsive({}).isDesktop()).toBe(true);
+    });
+
+    it("Should return true for largeDesktop area", function() {
+        spyOn($.fn, 'width').and.returnValue(1200);
+        expect($.responsive({}).isLargeDesktop()).toBe(true);
+    });
 });

@@ -1,0 +1,31 @@
+h1 {
+    color: #000088;
+}
+
+body:after {
+    display: block;
+    content: "mobile";
+    color: lightgreen;
+    /*visibility: hidden;*/
+}
+
+@media (min-width: 768px) {
+    body:after {
+        display: block;
+        content: "tablet"
+    }
+}
+
+@media (min-width: 992px) {
+    body:after {
+        display: block;
+        content: "desktop"
+    }
+}
+
+@media (min-width: 1200px) {
+    body:after {
+        display: block;
+        content: "desktop"
+    }
+}

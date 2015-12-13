@@ -36,11 +36,12 @@
     function _preparePrototypeFromArray(proto, breakpoints) {
         var i = breakpoints.length;
         while(i--) {
-            proto['is' + _capitalizeFirstLetter((breakpoints[i].name))] = function() {
-
-            };
+            proto['is' + _capitalizeFirstLetter((breakpoints[i].name))] = (function(breakpoint) {
+                return function() {
+                    return breakpoint.name === this.getBreakpoint();
+                };
+            })(breakpoints[i]);
         }
-        proto.isMobile = function() {};
     }
 
     function _preparePrototypeFromObject(proto, breakpoints) {
