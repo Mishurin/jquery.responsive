@@ -21,7 +21,8 @@
                 value: 1200
             }
         ],
-        resize: true
+        resize: true,
+        indicator: null
     };
 
     function _isObject(val) {
@@ -47,7 +48,11 @@
     function _preparePrototypeFromObject(proto, breakpoints) {
         for(var breakpoint in breakpoints) {
             if(breakpoints.hasOwnProperty(breakpoint)) {
-                proto['is' + _capitalizeFirstLetter(breakpoints[breakpoint])] = function() {};
+                proto['is' + _capitalizeFirstLetter(breakpoints[breakpoint])] = (function(val) {
+                    return function() {
+                        return val === this.getBreakpoint();
+                    };
+                })(breakpoints[breakpoint]);
             }
         }
     }
@@ -96,7 +101,8 @@
     };
 
     var _getBreakPointFromMediaQueries = function () {
-
-    }
+        var indicator = this.settings.indicator;
+        return getComputedStyle(indicator, ':after').content.replace(/"|'/gi, '');
+    };
 
 }(jQuery));
