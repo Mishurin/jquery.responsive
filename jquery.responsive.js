@@ -22,6 +22,8 @@
             }
         ],
         resize: true,
+        throttle: null,
+        debounce: null,
         indicator: null
     };
 
@@ -57,6 +59,68 @@
         }
     }
 
+    function _throttle(func, ms) {
+
+        var isThrottled = false,
+            savedArgs,
+            savedThis;
+
+        function wrapper() {
+
+            if (isThrottled) {
+                savedArgs = arguments;
+                savedThis = this;
+                return;
+            }
+
+            func.apply(this, arguments);
+
+            isThrottled = true;
+
+            setTimeout(function() {
+                isThrottled = false;
+                if (savedArgs) {
+                    wrapper.apply(savedThis, savedArgs);
+                    savedArgs = savedThis = null;
+                }
+            }, ms);
+        }
+
+        return wrapper;
+    }
+
+    function _debounce(func, wait, immediate) {
+        var timeout, args, context, timestamp, result;
+
+        var later = function() {
+            var last = new Date().getTime() - timestamp;
+
+            if (last < wait && last >= 0) {
+                timeout = setTimeout(later, wait - last);
+            } else {
+                timeout = null;
+                if (!immediate) {
+                    result = func.apply(context, args);
+                    if (!timeout) context = args = null;
+                }
+            }
+        };
+
+        return function() {
+            context = this;
+            args = arguments;
+            timestamp = new Date().getTime();
+            var callNow = immediate && !timeout;
+            if (!timeout) timeout = setTimeout(later, wait);
+            if (callNow) {
+                result = func.apply(context, args);
+                context = args = null;
+            }
+
+            return result;
+        };
+    }
+
     function jqueryEventProxy(name) {
         return function() {
             (this._JQ || ( this._JQ = $(this)))[name].apply(this._JQ, arguments);
@@ -72,6 +136,15 @@
 
     var Responsive = function (settings) {
         this.settings = settings;
+        if(!!this.settings.resize) {
+            if(this.settings.debounce) {
+                window.resize = _debounce(_windowResizeHandler, this.settings.debounce);
+            } else if(settings.throttle) {
+                window.resize = _throttle(_windowResizeHandler, this.settings.throttle);
+            } else {
+                window.resize = _windowResizeHandler;
+            }
+        }
     };
 
     $.responsive = function(settings) {
@@ -120,6 +193,10 @@
     var _getBreakPointFromMediaQueries = function () {
         var indicator = this.settings.indicator;
         return getComputedStyle(indicator, ':after').content.replace(/"|'/gi, '');
+    };
+
+    var _windowResizeHandler = function () {
+
     };
 
 }(jQuery));
