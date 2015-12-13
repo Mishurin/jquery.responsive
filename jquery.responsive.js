@@ -57,6 +57,19 @@
         }
     }
 
+    function jqueryEventProxy(name) {
+        return function() {
+            (this._JQ || ( this._JQ = $(this)))[name].apply(this._JQ, arguments);
+        };
+    }
+
+    var eventEmitter = {
+        emit: jqueryEventProxy('trigger'),
+        once: jqueryEventProxy('one'),
+        on: jqueryEventProxy('on'),
+        off: jqueryEventProxy('off')
+    };
+
     var Responsive = function (settings) {
         this.settings = settings;
     };
@@ -76,6 +89,10 @@
             breakpoints = DEFAULT_SETTINGS.breakpoints;
             proto.getBreakpoint = _getBreakPointFromWindowSize;
             _preparePrototypeFromArray(proto, breakpoints);
+        }
+
+        if(!!settings.resize) {
+            $.extend(proto, eventEmitter);
         }
 
         return new Responsive(settings);

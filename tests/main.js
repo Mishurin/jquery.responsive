@@ -135,4 +135,12 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         spyOn(instance, 'getBreakpoint').and.returnValue('largeDesktop');
         expect(instance.isLargeDesktop()).toBe(true);
     });
+
+    it("Should return on method when resize is not set explicitly", function() {
+        expect($.responsive().on).toBeFunction(true);
+    });
+
+    it("Should return undefined referencing to on method when resize is set to false explicitly", function() {
+        expect($.responsive({resize: false}).on).toBeUndefined(true);
+    });
 });
