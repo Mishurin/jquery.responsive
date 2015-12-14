@@ -24,7 +24,7 @@
         resize: true,
         proxy: null,
         interval: 100,
-        indicator: null
+        indicator: document.body
     };
 
     function _isObject(val) {

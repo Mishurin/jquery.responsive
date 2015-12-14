@@ -33,17 +33,11 @@ describe("JQuery Responsive Helpers Test Suit", function() {
     });
 
     it("Should return custom method isA when breakpoints set as a dictionary", function() {
-        expect($.responsive({
-            breakpoints: {a: 'a'},
-            indicator: document.body
-        }).isA).toBeFunction();
+        expect($.responsive({breakpoints: {a: 'a'}}).isA).toBeFunction();
     });
 
     it("Should return getBreakpoint method", function() {
-        expect($.responsive({
-            breakpoints: {a: 'a'},
-            indicator: document.body
-        }).getBreakpoint).toBeFunction();
+        expect($.responsive({breakpoints: {a: 'a'}}).getBreakpoint).toBeFunction();
     });
 
     it("Should return mobile breakpoint", function() {
@@ -93,8 +87,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            },
-            indicator: document.body
+            }
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('mobile');
         expect(instance.isMobile()).toBe(true);
@@ -107,8 +100,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            },
-            indicator: document.body
+            }
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('tablet');
         expect(instance.isTablet()).toBe(true);
@@ -121,8 +113,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            },
-            indicator: document.body
+            }
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('desktop');
         expect(instance.isDesktop()).toBe(true);
@@ -135,8 +126,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            },
-            indicator: document.body
+            }
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('largeDesktop');
         expect(instance.isLargeDesktop()).toBe(true);
