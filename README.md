@@ -69,7 +69,7 @@ dispatcher.on('change', function() {
 
 var $button1 = $('#button1');
 var $button2 = $('#button2');
-var $button3 = $('#button2');
+var $button3 = $('#button3');
 
 var customFn = function (currentView) {
     alert('View: ' + currentView);
@@ -97,6 +97,104 @@ alert(dispatcher.getBreakpoint());
 // Getting current state for dynamic dispatcher
 alert(dispatcher.state);
 ```
+
+## Options
+
+#### Defaults
+
+This options will be used by default.
+
+```javascript
+var DEFAULT_SETTINGS = {
+    breakpoints: [
+        {
+            name: 'mobile',
+            value: 0
+        },
+        {
+            name: 'tablet',
+            value: 768
+        },
+        {
+            name: 'desktop',
+            value: 992
+        },
+        {
+            name: 'largeDesktop',
+            value: 1200
+        }
+    ],
+    resize: true,
+    proxy: null,
+    interval: 100,
+    indicator: document.body
+};
+```
+#### Options Table
+
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>breakpoints</td>
+        <td>Array of objects, Object</td>
+        <td>
+        [
+                    {
+                        name: 'mobile',
+                        value: 0
+                    },
+                    {
+                        name: 'tablet',
+                        value: 768
+                    },
+                    {
+                        name: 'desktop',
+                        value: 992
+                    },
+                    {
+                        name: 'largeDesktop',
+                        value: 1200
+                    }
+        ]
+        </td>
+        <td>No</td>
+        <td>Specifies a set of available breakpoints (states)</td>
+    </tr>
+    <tr>
+        <td>resize</td>
+        <td>Boolean</td>
+        <td>true</td>
+        <td>No</td>
+        <td>Specifies id dispatcher will trigger events on resize (dynamic or static dispatcher)</td>
+    </tr>
+    <tr>
+        <td>proxy</td>
+        <td>Function</td>
+        <td>null</td>
+        <td>No</td>
+        <td>Specifies proxy function, such as deBounce or throttle</td>
+    </tr>
+    <tr>
+        <td>interval</td>
+        <td>Number</td>
+        <td>100</td>
+        <td>No</td>
+        <td>Specifies interval for proxy function</td>
+    </tr>
+    <tr>
+        <td>indicator</td>
+        <td>DOM element</td>
+        <td>document.body</td>
+        <td>Yes, when using media queries</td>
+        <td>Specifies element with CSS preset of after pseudo-elements for different resolutions</td>
+    </tr>
+</table>
 
 ## License
 

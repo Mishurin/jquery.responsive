@@ -16,6 +16,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'styles.css',
+            'node_modules/phantomjs-polyfill/bind-polyfill.js',
             'bower_components/jquery/dist/jquery.js',
             'jquery.responsive.js',
             'tests/**/*.js'
@@ -28,7 +29,6 @@ module.exports = function(config) {
 
         plugins: [
             'karma-jasmine',
-            'karma-chrome-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine-matchers',
             'karma-coverage'
@@ -71,7 +71,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'PhantomJS'],
+        browsers: ['PhantomJS'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

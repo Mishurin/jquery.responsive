@@ -93,7 +93,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         expect(instance.isMobile()).toBe(true);
     });
 
-    it("Should return true for tablet area", function() {
+    it("Should return true for tablet area with media queries set", function() {
         var instance = $.responsive({
             breakpoints: {
                 mobile: 'mobile',
@@ -102,7 +102,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 largeDesktop: 'largeDesktop'
             }
         });
-        spyOn(instance, 'getBreakpoint').and.returnValue('tablet');
+        spyOn(instance, '_getState').and.returnValue('tablet');
         expect(instance.isTablet()).toBe(true);
     });
 
@@ -115,7 +115,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 largeDesktop: 'largeDesktop'
             }
         });
-        spyOn(instance, 'getBreakpoint').and.returnValue('desktop');
+        spyOn(instance, '_getState').and.returnValue('desktop');
         expect(instance.isDesktop()).toBe(true);
     });
 
@@ -128,7 +128,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 largeDesktop: 'largeDesktop'
             }
         });
-        spyOn(instance, 'getBreakpoint').and.returnValue('largeDesktop');
+        spyOn(instance, '_getState').and.returnValue('largeDesktop');
         expect(instance.isLargeDesktop()).toBe(true);
     });
 
