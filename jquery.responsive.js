@@ -103,8 +103,8 @@
 
     $.responsive = function(settings) {
         var proto = Responsive.prototype = {};
-        var settings = $.extend({}, DEFAULT_SETTINGS, settings);
-        var breakpoints = settings.breakpoints;
+        var options = $.extend({}, DEFAULT_SETTINGS, settings);
+        var breakpoints = options.breakpoints;
         if($.isArray(breakpoints)) {
             breakpoints = _sortBreakPoints(breakpoints);
             proto.getBreakpoint = _getBreakPointFromWindowSize;
@@ -118,7 +118,7 @@
             _preparePrototypeFromArray(proto, breakpoints);
         }
 
-        if(!!settings.resize) {
+        if(!!options.resize) {
             $.extend(proto, eventEmitter);
         }
 
@@ -129,14 +129,12 @@
         };
 
         proto.not = function (checkArr, fn, args) {
-            if(checkArr.indexOf(this.state) !== -1) {
-                return;
-            } else {
+            if(checkArr.indexOf(this.state) === -1) {
                 fn.call(null, args);
             }
         };
 
-        return new Responsive(settings);
+        return new Responsive(options);
     };
 
     var _sortBreakPoints = function (breakpoints) {
