@@ -28,8 +28,8 @@
     };
 
     function _isObject(val) {
-        if (val === null) { return false;}
-        return ( (typeof val === 'function') || (typeof val === 'object') );
+        if (val === null) return false;
+        return ((typeof val === 'function') || (typeof val === 'object'));
     }
 
     function _capitalizeFirstLetter(string) {
@@ -45,6 +45,7 @@
                     return breakpoint.name === this.state;
                 };
             })(breakpoints[i]);
+
             proto['if' + capitalizedMethod] = (function(breakpoint) {
                 return function(fn, args) {
                     if(breakpoint.name === this.state) {
