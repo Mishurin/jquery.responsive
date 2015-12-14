@@ -42,13 +42,13 @@
             var capitalizedMethod = _capitalizeFirstLetter((breakpoints[i].name));
             proto['is' + capitalizedMethod] = (function(breakpoint) {
                 return function() {
-                    return breakpoint.name === this.state;
+                    return breakpoint.name === this._getState();
                 };
             })(breakpoints[i]);
 
             proto['if' + capitalizedMethod] = (function(breakpoint) {
                 return function(fn, args) {
-                    if(breakpoint.name === this.state) {
+                    if(breakpoint.name === this._getState()) {
                         fn.call(args);
                     }
                 };
@@ -62,13 +62,13 @@
                 var capitalizedMethod = _capitalizeFirstLetter(breakpoints[breakpoint]);
                 proto['is' + capitalizedMethod] = (function(val) {
                     return function() {
-                        return val === this.state;
+                        return val === this._getState();
                     };
                 })(breakpoints[breakpoint]);
 
                 proto['if' + capitalizedMethod] = (function(val) {
                     return function(fn, args) {
-                        if(val === this.state) {
+                        if(val === this._getState()) {
                             fn.call(null, args);
                         }
                     };
@@ -121,16 +121,23 @@
 
         if(!!options.resize) {
             $.extend(proto, eventEmitter);
+            proto._getState = function () {
+                return this.state;
+            };
+        } else {
+            proto._getState = function () {
+                return this.getBreakpoint();
+            };
         }
 
         proto.if = function (checkArr, fn, args) {
-            if(checkArr.indexOf(this.state) !== -1) {
+            if(checkArr.indexOf(this._getState()) !== -1) {
                 fn.call(null, args);
             }
         };
 
         proto.not = function (checkArr, fn, args) {
-            if(checkArr.indexOf(this.state) === -1) {
+            if(checkArr.indexOf(this._getState()) === -1) {
                 fn.call(null, args);
             }
         };
