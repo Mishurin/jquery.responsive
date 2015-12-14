@@ -42,12 +42,12 @@
             var capitalizedMethod = _capitalizeFirstLetter((breakpoints[i].name));
             proto['is' + capitalizedMethod] = (function(breakpoint) {
                 return function() {
-                    return breakpoint.name === this.getBreakpoint();
+                    return breakpoint.name === this.state;
                 };
             })(breakpoints[i]);
             proto['if' + capitalizedMethod] = (function(breakpoint) {
                 return function(fn, args) {
-                    if(breakpoint.name === this.getBreakpoint()) {
+                    if(breakpoint.name === this.state) {
                         fn.call(args);
                     }
                 };
@@ -61,13 +61,13 @@
                 var capitalizedMethod = _capitalizeFirstLetter(breakpoints[breakpoint]);
                 proto['is' + capitalizedMethod] = (function(val) {
                     return function() {
-                        return val === this.getBreakpoint();
+                        return val === this.state;
                     };
                 })(breakpoints[breakpoint]);
 
                 proto['if' + capitalizedMethod] = (function(val) {
                     return function(fn, args) {
-                        if(val === this.getBreakpoint()) {
+                        if(val === this.state) {
                             fn.call(null, args);
                         }
                     };
@@ -121,6 +121,12 @@
         if(!!settings.resize) {
             $.extend(proto, eventEmitter);
         }
+
+        proto.if = function (checkArr, fn, args) {
+            if(checkArr.indexOf(this.state) !== -1) {
+                fn.call(null, args);
+            }
+        };
 
         return new Responsive(settings);
     };
