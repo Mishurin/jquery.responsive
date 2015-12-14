@@ -144,7 +144,6 @@ var DEFAULT_SETTINGS = {
         <td>breakpoints</td>
         <td>Array of objects, Object</td>
         <td>
-        ```javascript
         [
             {
                 name: 'mobile',
@@ -163,7 +162,6 @@ var DEFAULT_SETTINGS = {
                 value: 1200
             }
         ]
-        ```
         </td>
         <td>No</td>
         <td>Specifies a set of available breakpoints (states)</td>
