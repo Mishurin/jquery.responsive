@@ -12,16 +12,18 @@
     <p>Media Queries State: <span id="media-state"></span></p>
     <button id="custom-button">Mobile and desktop only</button>
     <button id="another-button">Mobile or Desktop</button>
+    <button id="yet-another-button">Everything excepting Mobile and Desktop</button>
 
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="utils.js"></script>
-	<script src="jquery.responsive.js"></script>
+    <script src="jquery.responsive.js"></script>
     <script>
         var $defaultState = $('#default-state');
         var $customState = $('#custom-state');
         var $mediaState = $('#media-state');
         var $buttonWithCustomBehaviour = $('#custom-button');
         var $anotherButton = $('#another-button');
+        var $yetAnotherButton = $('#yet-another-button');
 
         var instanceWithDefaultSettings = $.responsive();
         instanceWithDefaultSettings.on('resize', function() {
@@ -71,6 +73,10 @@
 
         $anotherButton.on('click', function() {
             instanceWithMediaQueries.if(['mobile', 'desktop'], customFn, ['mobile or desktop']);
+        });
+
+        $yetAnotherButton.on('click', function() {
+            instanceWithMediaQueries.not(['mobile', 'desktop'], customFn, ['Not mobile or desktop']);
         });
 
     </script>

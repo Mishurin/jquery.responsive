@@ -128,6 +128,14 @@
             }
         };
 
+        proto.not = function (checkArr, fn, args) {
+            if(checkArr.indexOf(this.state) !== -1) {
+                return;
+            } else {
+                fn.call(null, args);
+            }
+        };
+
         return new Responsive(settings);
     };
 
