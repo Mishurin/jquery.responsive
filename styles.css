@@ -26,6 +26,6 @@ body:after {
 @media (min-width: 1200px) {
     body:after {
         display: block;
-        content: "desktop"
+        content: "largeDesktop"
     }
 }
