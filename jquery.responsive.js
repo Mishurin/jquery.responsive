@@ -94,7 +94,7 @@
         this.state = this.getBreakpoint();
         if(!!this.settings.resize) {
             if(this.settings.proxy) {
-                $window.on('resize', this.settings.proxy(_windowResizeHandler.bind(this), this.settings.interval));
+                $window.on('resize', this.settings.proxy(_windowResizeHandler, this.settings.interval).bind(this));
             } else {
                 $window.on('resize', _windowResizeHandler.bind(this));
             }
@@ -169,7 +169,7 @@
         var currentState = this.getBreakpoint();
         if(this.state !== currentState) {
             this.emit('resize.' + currentState);
-            this.emit('change', {prev: _this, cur: currentState});
+            this.emit('change', {prev: _this.state, cur: currentState});
             this.state = currentState;
         }
         this.emit('resize');
