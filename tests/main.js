@@ -25,11 +25,7 @@ describe("JQuery Responsive Helpers Test Suit", function() {
     });
 
     it("Should return default isTablet method", function() {
-        expect($.responsive({}).isDesktop).toBeFunction();
-    });
-
-    it("Should return default isMobile method on wrong data type", function() {
-        expect($.responsive({breakpoints: null}).isMobile).toBeFunction();
+        expect($.responsive().isDesktop).toBeFunction();
     });
 
     it("Should return custom method isA when breakpoints are set", function() {
@@ -37,11 +33,17 @@ describe("JQuery Responsive Helpers Test Suit", function() {
     });
 
     it("Should return custom method isA when breakpoints set as a dictionary", function() {
-        expect($.responsive({breakpoints: {a: 'a'}}).isA).toBeFunction();
+        expect($.responsive({
+            breakpoints: {a: 'a'},
+            indicator: document.body
+        }).isA).toBeFunction();
     });
 
-    it("Should return custom method isA when breakpoints set as a dictionary", function() {
-        expect($.responsive({}).getBreakpoint).toBeFunction();
+    it("Should return getBreakpoint method", function() {
+        expect($.responsive({
+            breakpoints: {a: 'a'},
+            indicator: document.body
+        }).getBreakpoint).toBeFunction();
     });
 
     it("Should return mobile breakpoint", function() {
@@ -91,7 +93,8 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            }
+            },
+            indicator: document.body
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('mobile');
         expect(instance.isMobile()).toBe(true);
@@ -104,7 +107,8 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            }
+            },
+            indicator: document.body
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('tablet');
         expect(instance.isTablet()).toBe(true);
@@ -117,7 +121,8 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            }
+            },
+            indicator: document.body
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('desktop');
         expect(instance.isDesktop()).toBe(true);
@@ -130,7 +135,8 @@ describe("JQuery Responsive Helpers Test Suit", function() {
                 tablet: 'tablet',
                 desktop: 'desktop',
                 largeDesktop: 'largeDesktop'
-            }
+            },
+            indicator: document.body
         });
         spyOn(instance, 'getBreakpoint').and.returnValue('largeDesktop');
         expect(instance.isLargeDesktop()).toBe(true);

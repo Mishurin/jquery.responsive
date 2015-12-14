@@ -7,7 +7,66 @@
 </head>
 <body>
     <h1>Demo with media query preset</h1>
-	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <p>Default Settings State: <span id="default-state"></span></p>
+    <p>Default Settings State: <span id="custom-state"></span></p>
+    <p>Media Queries State: <span id="media-state"></span></p>
+    <button id="custom-button">Mobile and desktop only</button>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="utils.js"></script>
 	<script src="jquery.responsive.js"></script>
+    <script>
+        var $defaultState = $('#default-state');
+        var $customState = $('#custom-state');
+        var $mediaState = $('#media-state');
+        var $buttonWithCustomBehaviour = $('#custom-button');
+
+        var instanceWithDefaultSettings = $.responsive();
+        instanceWithDefaultSettings.on('resize', function() {
+            $defaultState.html(this.getBreakpoint());
+        });
+
+        var instanceWithCustomSettings = $.responsive({
+            breakpoints: [
+                {
+                    name: 'small',
+                    value: 0
+                },
+                {
+                    name: 'big',
+                    value: 500
+                }
+            ]
+        });
+
+        instanceWithCustomSettings.on('resize', function() {
+            $customState.html(this.getBreakpoint());
+        });
+
+
+        var instanceWithMediaQueries = $.responsive({
+            breakpoints: {
+                mobile: 'mobile',
+                tablet: 'tablet',
+                desktop: 'desktop',
+                largeDesktop: 'largeDesktop'
+            },
+            indicator: document.body
+        });
+
+        instanceWithMediaQueries.on('resize', function() {
+            $mediaState.html(this.getBreakpoint());
+        });
+
+        var customFn = function (currentView) {
+            alert('View: ' + currentView);
+        };
+
+        $buttonWithCustomBehaviour.on('click', function() {
+            instanceWithMediaQueries.ifMobile(customFn, ['mobile']);
+            instanceWithMediaQueries.ifDesktop(customFn, ['desktop']);
+        });
+
+    </script>
 </body>
 </html>

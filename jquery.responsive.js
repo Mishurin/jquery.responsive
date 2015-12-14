@@ -22,8 +22,8 @@
             }
         ],
         resize: true,
-        throttle: null,
-        debounce: null,
+        proxy: null,
+        interval: 100,
         indicator: null
     };
 
@@ -39,9 +39,17 @@
     function _preparePrototypeFromArray(proto, breakpoints) {
         var i = breakpoints.length;
         while(i--) {
-            proto['is' + _capitalizeFirstLetter((breakpoints[i].name))] = (function(breakpoint) {
+            var capitalizedMethod = _capitalizeFirstLetter((breakpoints[i].name));
+            proto['is' + capitalizedMethod] = (function(breakpoint) {
                 return function() {
                     return breakpoint.name === this.getBreakpoint();
+                };
+            })(breakpoints[i]);
+            proto['if' + capitalizedMethod] = (function(breakpoint) {
+                return function(fn, args) {
+                    if(breakpoint.name === this.getBreakpoint()) {
+                        fn.call(args);
+                    }
                 };
             })(breakpoints[i]);
         }
@@ -50,75 +58,22 @@
     function _preparePrototypeFromObject(proto, breakpoints) {
         for(var breakpoint in breakpoints) {
             if(breakpoints.hasOwnProperty(breakpoint)) {
-                proto['is' + _capitalizeFirstLetter(breakpoints[breakpoint])] = (function(val) {
+                var capitalizedMethod = _capitalizeFirstLetter(breakpoints[breakpoint]);
+                proto['is' + capitalizedMethod] = (function(val) {
                     return function() {
                         return val === this.getBreakpoint();
                     };
                 })(breakpoints[breakpoint]);
+
+                proto['if' + capitalizedMethod] = (function(val) {
+                    return function(fn, args) {
+                        if(val === this.getBreakpoint()) {
+                            fn.call(null, args);
+                        }
+                    };
+                })(breakpoints[breakpoint]);
             }
         }
-    }
-
-    function _throttle(func, ms) {
-
-        var isThrottled = false,
-            savedArgs,
-            savedThis;
-
-        function wrapper() {
-
-            if (isThrottled) {
-                savedArgs = arguments;
-                savedThis = this;
-                return;
-            }
-
-            func.apply(this, arguments);
-
-            isThrottled = true;
-
-            setTimeout(function() {
-                isThrottled = false;
-                if (savedArgs) {
-                    wrapper.apply(savedThis, savedArgs);
-                    savedArgs = savedThis = null;
-                }
-            }, ms);
-        }
-
-        return wrapper;
-    }
-
-    function _debounce(func, wait, immediate) {
-        var timeout, args, context, timestamp, result;
-
-        var later = function() {
-            var last = new Date().getTime() - timestamp;
-
-            if (last < wait && last >= 0) {
-                timeout = setTimeout(later, wait - last);
-            } else {
-                timeout = null;
-                if (!immediate) {
-                    result = func.apply(context, args);
-                    if (!timeout) context = args = null;
-                }
-            }
-        };
-
-        return function() {
-            context = this;
-            args = arguments;
-            timestamp = new Date().getTime();
-            var callNow = immediate && !timeout;
-            if (!timeout) timeout = setTimeout(later, wait);
-            if (callNow) {
-                result = func.apply(context, args);
-                context = args = null;
-            }
-
-            return result;
-        };
     }
 
     function jqueryEventProxy(name) {
@@ -136,13 +91,12 @@
 
     var Responsive = function (settings) {
         this.settings = settings;
+        this.state = this.getBreakpoint();
         if(!!this.settings.resize) {
-            if(this.settings.debounce) {
-                window.resize = _debounce(_windowResizeHandler, this.settings.debounce);
-            } else if(settings.throttle) {
-                window.resize = _throttle(_windowResizeHandler, this.settings.throttle);
+            if(this.settings.proxy) {
+                $window.on('resize', this.settings.proxy(_windowResizeHandler.bind(this), this.settings.interval));
             } else {
-                window.resize = _windowResizeHandler;
+                $window.on('resize', _windowResizeHandler.bind(this));
             }
         }
     };
@@ -188,6 +142,7 @@
                 return currentBreakPoint
             }
         }
+        return currentBreakPoint;
     };
 
     var _getBreakPointFromMediaQueries = function () {
@@ -196,7 +151,11 @@
     };
 
     var _windowResizeHandler = function () {
-
+        var currentState = this.getBreakpoint();
+        if(this.state !== currentState) {
+            this.emit('resize.' + currentState);
+        }
+        this.emit('resize');
     };
 
 }(jQuery));
