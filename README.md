@@ -85,7 +85,8 @@ $button2.on('click', function() {
     dispatcher.not(['mobile', 'desktop'], customFn, ['Not mobile or desktop']);
 });
 
-// Execute function for the single breakpoint which was generated on creation of instance according to the specified configuration breakpoints names
+// Execute function for the single breakpoint which was generated on creation of the instance
+// according to the specified configuration breakpoints names
 $button3.on('click', function() {
     dispatcher.ifMobile(customFn, ['mobile']);
 });
