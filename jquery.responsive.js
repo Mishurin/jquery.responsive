@@ -174,7 +174,7 @@
         var _this = this;
         var currentState = this.getBreakpoint();
         if(this.state !== currentState) {
-            this.emit('resize.' + currentState);
+            this.emit('change.' + currentState);
             this.emit('change', {prev: _this.state, cur: currentState});
             this.state = currentState;
         }

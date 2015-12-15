@@ -181,7 +181,7 @@ var DEFAULT_SETTINGS = {
 
 <table>
     <tr>
-        <th>Key</th>
+        <th>Method</th>
         <th>Description</th>
     </tr>
     <tr>
@@ -199,6 +199,31 @@ var DEFAULT_SETTINGS = {
     <tr>
         <td>getBreakpoint()</td>
         <td>Returns current breakpoint</td>
+    </tr>
+    <tr>
+        <td>on(String, Function)</td>
+        <td>Event emitter listener</td>
+    </tr>
+</table>
+
+## Events
+
+<table>
+    <tr>
+        <th>Event</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>resize</td>
+        <td>Called whenever the size of the user window changes</td>
+    </tr>
+    <tr>
+        <td>change</td>
+        <td>Called whenever breakpoint (state) changed</td>
+    </tr>
+    <tr>
+        <td>change.[state]</td>
+        <td>Triggered each time breakpoint (state) changed. Could be used for listening to particular state</td>
     </tr>
 </table>
 
