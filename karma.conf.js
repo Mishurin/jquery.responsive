@@ -15,7 +15,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'styles.css',
+            'demo/styles.css',
             'node_modules/phantomjs-polyfill/bind-polyfill.js',
             'bower_components/jquery/dist/jquery.js',
             'jquery.responsive.js',
