@@ -143,26 +143,7 @@ var DEFAULT_SETTINGS = {
     <tr>
         <td>breakpoints</td>
         <td>Array of objects, Object</td>
-        <td>
-        [
-            {
-                name: 'mobile',
-                value: 0
-            },
-            {
-                name: 'tablet',
-                value: 768
-            },
-            {
-                name: 'desktop',
-                value: 992
-            },
-            {
-                name: 'largeDesktop',
-                value: 1200
-            }
-        ]
-        </td>
+        <td>'mobile' => 0, 'tablet' => 768, 'desktop' => 992, 'largeDesktop' => 1200</td>
         <td>No</td>
         <td>Specifies a set of available breakpoints (states)</td>
     </tr>
