@@ -102,7 +102,7 @@ alert(dispatcher.state);
 
 #### Defaults
 
-This options will be used by default.
+These options will be used by default.
 
 ```javascript
 var DEFAULT_SETTINGS = {
@@ -193,6 +193,31 @@ var DEFAULT_SETTINGS = {
         <td>document.body</td>
         <td>Yes, when using media queries</td>
         <td>Specifies element with CSS preset of after pseudo-elements for different resolutions</td>
+    </tr>
+</table>
+
+## Methods
+
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <th>is[media](Function(function to call), [Array(arguments)])</th>
+        <th>Dynamically created method corresponding to breakpoint, such as 'mobile' = > 'isMobile' etc.</th>
+    </tr>
+    <tr>
+        <th>if([Array(breakpoints)], Function(function to call), [Array(arguments)])</th>
+        <th>Calls function for particular array of breakpoints</th>
+    </tr>
+    <tr>
+        <th>not([Array(breakpoints)], Function(function to call), [Array(arguments)])</th>
+        <th>Calls function for particular set of breakpoints excepting those were set in the array</th>
+    </tr>
+    <tr>
+        <th>getBreakpoint()</th>
+        <th>Returns current breakpoint</th>
     </tr>
 </table>
 
