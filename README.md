@@ -204,20 +204,20 @@ var DEFAULT_SETTINGS = {
         <th>Description</th>
     </tr>
     <tr>
-        <th>is[media](Function(function to call), [Array(arguments)])</th>
-        <th>Dynamically created method corresponding to breakpoint, such as 'mobile' = > 'isMobile' etc.</th>
+        <td>is[media](Function(function to call), [Array(arguments)])</td>
+        <td>Dynamically created method corresponding to breakpoint, such as 'mobile' = > 'isMobile' etc.</td>
     </tr>
     <tr>
-        <th>if([Array(breakpoints)], Function(function to call), [Array(arguments)])</th>
-        <th>Calls function for particular array of breakpoints</th>
+        <td>if([Array(breakpoints)], Function(function to call), [Array(arguments)])</td>
+        <td>Calls function for particular array of breakpoints</td>
     </tr>
     <tr>
-        <th>not([Array(breakpoints)], Function(function to call), [Array(arguments)])</th>
-        <th>Calls function for particular set of breakpoints excepting those were set in the array</th>
+        <td>not([Array(breakpoints)], Function(function to call), [Array(arguments)])</td>
+        <td>Calls function for particular set of breakpoints excepting those were set in the array</td>
     </tr>
     <tr>
-        <th>getBreakpoint()</th>
-        <th>Returns current breakpoint</th>
+        <td>getBreakpoint()</td>
+        <td>Returns current breakpoint</td>
     </tr>
 </table>
 
