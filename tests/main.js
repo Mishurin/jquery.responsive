@@ -44,7 +44,6 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         expect($.responsive()._getState).toBeFunction();
     });
 
-
     it("Should return helper function 'if", function() {
         expect($.responsive().if).toBeFunction();
     });
@@ -205,5 +204,27 @@ describe("JQuery Responsive Helpers Test Suit", function() {
 
     it("Should return undefined referencing to on method when resize is set to false explicitly", function() {
         expect($.responsive({resize: false}).on).toBeUndefined(true);
+    });
+
+    it("Proxy function should be called on instance creation", function() {
+        spyOn(utils, '_deBounce');
+        $.responsive({proxy: utils._deBounce});
+        expect(utils._deBounce).toHaveBeenCalled();
+    });
+
+    it("Inner 'resize' event of window resize handler should be called on resize", function() {
+        var instance = $.responsive();
+        spyOn(instance, 'emit');
+        $(window).trigger('resize');
+        expect(instance.emit).toHaveBeenCalledWith('resize');
+    });
+
+    it("Inner 'change' event of window resize handler should be called on resize", function() {
+        var instance = $.responsive();
+        instance.state = '';
+        spyOn(instance, 'getBreakpoint').and.returnValue('mobile');
+        spyOn(instance, 'emit');
+        $(window).trigger('resize');
+        expect(instance.emit).toHaveBeenCalledWith('change.mobile');
     });
 });

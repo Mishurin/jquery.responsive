@@ -95,7 +95,7 @@
         this.state = this.getBreakpoint();
         if(!!this.settings.resize) {
             if(this.settings.proxy) {
-                $window.on('resize', this.settings.proxy(_windowResizeHandler, this.settings.interval).bind(this));
+                $window.on('resize', this.settings.proxy(_windowResizeHandler.bind(this), this.settings.interval));
             } else {
                 $window.on('resize', _windowResizeHandler.bind(this));
             }
