@@ -12,10 +12,6 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         expect($.responsive({})).toBeObject();
     });
 
-    it("Helper should return an object", function() {
-        expect($.responsive({})).toBeObject();
-    });
-
     it("Should return default isMobile method", function() {
         expect($.responsive({}).isMobile).toBeFunction();
     });
@@ -24,8 +20,12 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         expect($.responsive({}).isTablet).toBeFunction();
     });
 
-    it("Should return default isTablet method", function() {
+    it("Should return default isDesktop method", function() {
         expect($.responsive().isDesktop).toBeFunction();
+    });
+
+    it("Should return default isDesktop method", function() {
+        expect($.responsive().isLargeDesktop).toBeFunction();
     });
 
     it("Should return custom method isA when breakpoints are set", function() {
@@ -38,6 +38,55 @@ describe("JQuery Responsive Helpers Test Suit", function() {
 
     it("Should return getBreakpoint method", function() {
         expect($.responsive({breakpoints: {a: 'a'}}).getBreakpoint).toBeFunction();
+    });
+
+    it("Should return service function _getState", function() {
+        expect($.responsive()._getState).toBeFunction();
+    });
+
+
+    it("Should return helper function 'if", function() {
+        expect($.responsive().if).toBeFunction();
+    });
+
+    it("Helper function passed to 'if' should be called when breakpoint matched", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(100);
+        $.responsive().if(['mobile'], obj.fn, args);
+        expect(obj.fn).toHaveBeenCalledWith(args);
+    });
+
+    it("Helper function passed to 'if' should not be called when breakpoint does not match", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(1000);
+        $.responsive().if(['mobile'], obj.fn, args);
+        expect(obj.fn).not.toHaveBeenCalled();
+    });
+
+    it("Helper function passed to 'not' should be called when current break point is out of list", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(1000);
+        $.responsive().not(['mobile'], obj.fn, args);
+        expect(obj.fn).toHaveBeenCalledWith(args);
+    });
+
+    it("Helper function passed to 'not' should not be called when current break point is in the list", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(100);
+        $.responsive().not(['mobile'], obj.fn, args);
+        expect(obj.fn).not.toHaveBeenCalled();
+    });
+
+    it("Should return helper function 'not", function() {
+        expect($.responsive().not).toBeFunction();
     });
 
     it("Should return mobile breakpoint", function() {
@@ -63,6 +112,24 @@ describe("JQuery Responsive Helpers Test Suit", function() {
     it("Should return true for mobile area", function() {
         spyOn($.fn, 'width').and.returnValue(100);
         expect($.responsive({}).isMobile()).toBe(true);
+    });
+
+    it("Helper function passed to 'ifMobile' should be called when current breakpoint is mobile", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(100);
+        $.responsive().ifMobile(obj.fn, args);
+        expect(obj.fn).not.toHaveBeenCalledWith(args);
+    });
+
+    it("Helper function passed to 'ifMobile' should never be called when current breakpoint is not mobile", function() {
+        var obj = {fn : function() {}};
+        var args = ['argument'];
+        spyOn(obj, 'fn');
+        spyOn($.fn, 'width').and.returnValue(1000);
+        $.responsive().ifMobile(obj.fn, args);
+        expect(obj.fn).not.toHaveBeenCalledWith(args);
     });
 
     it("Should return true for tablet area", function() {
