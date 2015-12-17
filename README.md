@@ -227,6 +227,19 @@ var DEFAULT_SETTINGS = {
     </tr>
 </table>
 
+## Development dependencies installation
+
+```bash
+$ npm install
+```
+installs gulp configuration, jasmine testing frameworks and other things from package.json
+
+## Tests
+
+```bash
+$ karma start
+```
+
 ## License
 
 MIT: http://rem.mit-license.org
