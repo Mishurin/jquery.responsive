@@ -227,4 +227,23 @@ describe("JQuery Responsive Helpers Test Suit", function() {
         $(window).trigger('resize');
         expect(instance.emit).toHaveBeenCalledWith('change.mobile');
     });
+
+    it("Should call instance 'getBreakpoint' public function", function () {
+        var instance = $.responsive({resize: false});
+        spyOn(instance, 'getBreakpoint');
+        instance._getState();
+        expect(instance.getBreakpoint).toHaveBeenCalled();
+    });
+
+    it("Should not call instance 'getBreakpoint' public function", function () {
+        var instance = $.responsive();
+        spyOn(instance, 'getBreakpoint');
+        instance._getState();
+        expect(instance.getBreakpoint).not.toHaveBeenCalled();
+    });
+
+    it("Instance initial state should be equal to state taken by instance method '_getState'", function () {
+        var instance = $.responsive();
+        expect(instance.state).toBe(instance._getState());
+    });
 });
