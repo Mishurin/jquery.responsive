@@ -232,7 +232,7 @@ var DEFAULT_SETTINGS = {
 ```bash
 $ npm install
 ```
-installs gulp configuration, jasmine testing frameworks and other things from package.json
+installs gulp configuration, jasmine testing framework and other things from package.json
 
 ## Tests
 
